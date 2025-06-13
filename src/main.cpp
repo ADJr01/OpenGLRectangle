@@ -5,26 +5,33 @@
 
 std::string vertex_shader = R"(
 #version 410
-layout(location=0) in vec4 pos;
+layout(location=0) in vec3 pos;
+out vec3 positional_data;
 void main(){
-    gl_Position = pos;
+    gl_Position = vec4(pos,1.0);
+    positional_data=pos;
 }
 )";
 
 std::string fragment_shader = R"(
 #version 410
 out vec4 color;
-
+in vec3 positional_data;
+uniform float time;
 void main(){
-    color = vec4(0.1,0.2,0.45,1.0);
+    float r = 0.2 + sin(0.04159*time)/cos(positional_data.x);
+    float g = 0.2 + sin(0.14159*time)/cos(positional_data.y);
+    float b = 0.2 + sin(0.24159*time)/cos(positional_data.z);
+    color = vec4(r,g,b,1.0);
 }
 )";
 
 unsigned int compileShader(std::string& shader_src,unsigned int shader_type);
 unsigned int createShaderProgram(std::string& vertex_shader,std::string& fragment_shader);
-
+unsigned int vao,vbo,program;
 int main() {
     auto glx = std::make_unique<GLX>();
+
     glx->setWindowTitle("Rectangle");
     glx->setWindowWidth(glx->glx_primary_monitor_width());
     glx->setWindowHeight(glx->glx_primary_monitor_height());
@@ -39,7 +46,6 @@ int main() {
             -0.8f,-0.8f,0.0f,
             0.8f,-0.8f,0.0f,
         };
-        unsigned int vao,vbo,program;
         glGenVertexArrays(1,&vao);
         glBindVertexArray(vao);
         //buffer
@@ -56,6 +62,9 @@ int main() {
 
 
     glx->onTick([] {
+        float time = glfwGetTime();
+        auto time_ptr = glGetUniformLocation(program,"time");
+        glUniform1f(time_ptr,time);
         glClear(GL_COLOR_BUFFER_BIT);
         glDrawArrays(GL_TRIANGLES,0,6);
 
