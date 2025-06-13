@@ -36,8 +36,8 @@ int main() {
     glx->setWindowTitle("Rectangle");
     glx->setWindowWidth(glx->glx_primary_monitor_width());
     glx->setWindowHeight(glx->glx_primary_monitor_height());
-
-    glx->addPostLaunchProcedure([]() {
+    auto shader_tool = glx->ShaderTool();
+    glx->addPostLaunchProcedure([&shader_tool]() {
 
         float vertex_data[] = {
             -0.8f,0.8f,0.0f,
@@ -55,7 +55,10 @@ int main() {
         glBufferData(GL_ARRAY_BUFFER,sizeof(float)*18,vertex_data,GL_STATIC_DRAW);
         glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,sizeof(float)*3,(void*)0);
         glEnableVertexAttribArray(0);
-        program = createShaderProgram(vertex_shader,fragment_shader);
+        shader_tool.setFragmentShaderPath("/home/adnan/Desktop/Projects/Cpp/CG/OpenGlRectangle/src/shaders/fragment.glsl");
+        shader_tool.setVertexShaderPath("/home/adnan/Desktop/Projects/Cpp/CG/OpenGlRectangle/src/shaders/vertex.glsl");
+        shader_tool.buildProgram();
+        program = shader_tool.getProgram(); //createShaderProgram(vertex_shader,fragment_shader);
         glUseProgram(program);
         glBindVertexArray(vao);
 
