@@ -10,7 +10,7 @@ pkg_check_modules(GLEW REQUIRED glew)
 pkg_check_modules(GLFW REQUIRED glfw3)
 
 # Single executable
-add_executable(OpenGlRectangle src/main.cpp src/GLX/Glx.cpp)
+add_executable(OpenGlRectangle src/main.cpp src/GLX/Glx.cpp src/GLX/GLSLX/GlslX.cpp)
 
 # Tell CMake where to find the headers
 target_include_directories(OpenGlRectangle PRIVATE

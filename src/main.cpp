@@ -15,7 +15,7 @@ void main(){
 
 std::string fragment_shader = R"(
 #version 410
-out vec4 color;
+layout(location = 0) out vec4 color;
 in vec3 positional_data;
 uniform float time;
 void main(){
