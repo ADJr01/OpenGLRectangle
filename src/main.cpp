@@ -19,9 +19,10 @@ out vec4 color;
 in vec3 positional_data;
 uniform float time;
 void main(){
-    float r = 0.2 + sin(0.04159*time)/cos(positional_data.x);
-    float g = 0.2 + sin(0.14159*time)/cos(positional_data.y);
-    float b = 0.2 + sin(0.24159*time)/cos(positional_data.z);
+    float phi_time = time/0.61;
+    float r = cos(positional_data.x*phi_time);
+    float g = sin(positional_data.y*phi_time);
+    float b = cos(positional_data.z*phi_time);
     color = vec4(r,g,b,1.0);
 }
 )";
