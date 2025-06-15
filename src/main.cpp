@@ -13,27 +13,27 @@ int main() {
     GLX glx;
     auto shaderTool = glx.ShaderTool();
     glx.setWindowTitle("Rectangle");
-    glx.setWindowWidth(glx.glx_primary_monitor_width());
-    glx.setWindowHeight(glx.glx_primary_monitor_height());
+    glx.setWindowWidth(800);
+    glx.setWindowHeight(600);
     glx.addPostLaunchProcedure([&glx]() {
         float vertex_data[] = {
-            -0.8f,0.8f,0.0f,
-            0.8f,0.8f,0.0f,
-            -0.8f,-0.8f,0.0f,
-            0.8f,0.8f,0.0f,
-            -0.8f,-0.8f,0.0f,
-            0.8f,-0.8f,0.0f,
+            -0.8f,0.8f,0.1f,
+            0.8f,0.8f,0.2f,
+            -0.8f,-0.8f,0.1f,
+            0.8f,0.8f,0.2f,
+            -0.8f,-0.8f,0.1f,
+            0.8f,-0.8f,0.2f,
         };
 
-        glx.ShaderTool().setVertexShaderPath("/home/adnan/Desktop/Projects/Cpp/CG/OpenGlRectangle/src/shaders/vertex.glsl");
-        glx.ShaderTool().setFragmentShaderPath("/home/adnan/Desktop/Projects/Cpp/CG/OpenGlRectangle/src/shaders/fragment.glsl");
+        glx.ShaderTool().setVertexShaderPath(vert_src);
+        glx.ShaderTool().setFragmentShaderPath(frag_src);
         glx.ShaderTool().buildProgram();
         glGenVertexArrays(1,&vao);
         glBindVertexArray(vao);
         //buffer
         glGenBuffers(1,&vbo);
         glBindBuffer(GL_ARRAY_BUFFER,vbo);
-        glBufferData(GL_ARRAY_BUFFER,sizeof(float)*18,vertex_data,GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER,sizeof(float)*18,vertex_data,GL_DYNAMIC_DRAW);
         glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,sizeof(float)*3,(void*)0);
         glEnableVertexAttribArray(0);
         glBindVertexArray(vao);
@@ -43,13 +43,14 @@ int main() {
     });
 
 
-    glx.onTick([&glx] {
+    glx.onTick([&glx]() {
 
         float time = glfwGetTime();
         auto time_ptr = glGetUniformLocation(glx.ShaderTool().getProgram(),"time");
         glUniform1f(time_ptr,time);
         glClear(GL_COLOR_BUFFER_BIT);
         glDrawArrays(GL_TRIANGLES,0,6);
+
 
     });
     glx.launch();
