@@ -19,6 +19,7 @@ int main() {
             -0.8f,0.8f,0.1f,
             0.8f,0.8f,0.2f,
             -0.8f,-0.8f,0.1f,
+
             0.8f,0.8f,0.2f,
             -0.8f,-0.8f,0.1f,
             0.8f,-0.8f,0.2f,
@@ -35,7 +36,7 @@ int main() {
         glBufferData(GL_ARRAY_BUFFER,sizeof(float)*18,vertex_data,GL_DYNAMIC_DRAW);
         glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,sizeof(float)*3,(void*)0);
         glEnableVertexAttribArray(0);
-        glBindVertexArray(vao);
+        if (glIsVertexArray(vao))glBindVertexArray(vao);
         glUseProgram(glx.ShaderTool().getProgram());
 
 
