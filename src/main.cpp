@@ -11,7 +11,6 @@ std::string vert_src = "/home/adnan/Desktop/Projects/Cpp/CG/OpenGlRectangle/src/
 unsigned int vao,vbo;
 int main() {
     GLX glx;
-    auto shaderTool = glx.ShaderTool();
     glx.setWindowTitle("Rectangle");
     glx.setWindowWidth(800);
     glx.setWindowHeight(600);
