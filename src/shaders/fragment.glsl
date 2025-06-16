@@ -11,8 +11,7 @@ void main(){
     float y_mid = positional_data.y;
     float z_mid = positional_data.z/2;
     float phi_time = (time/0.613);
-    float red_channel_data = waveColor(x_mid,y_mid,phi_time)/phi_time;
-    float r = red_channel_data<0.11?0.12:red_channel_data;
+    float r =waveColor(0.05,0.035,phi_time);
     float g = waveColor(y_mid,x_mid,phi_time);
     float b = waveColor(x_mid,y_mid,phi_time); // we're passing blue color to x axis
     color = vec4(r,g,b,1.0);
