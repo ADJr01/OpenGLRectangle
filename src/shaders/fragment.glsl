@@ -6,13 +6,16 @@ float waveColor(float channel,float wave_to_channel,float time){
     int time_decimal = int(time * 10) % 10;
     return ((time_decimal%2)==0)? (channel * sin(time))/wave_to_channel:(channel * cos(-time))/wave_to_channel;
 }
+float alphaPerimeter(float channel_x,float channel_y){
+    return sin((channel_x*channel_y)/(channel_x+channel_y));
+}
 void main(){
     float x_mid = positional_data.x;
     float y_mid = positional_data.y;
     float z_mid = positional_data.z/2;
     float phi_time = (time/0.613);
-    float r =waveColor(0.05,0.035,phi_time);
-    float g = waveColor(y_mid,x_mid,phi_time);
-    float b = waveColor(x_mid,y_mid,phi_time); // we're passing blue color to x axis
+    float r =waveColor(alphaPerimeter(y_mid,x_mid),alphaPerimeter(x_mid,y_mid),phi_time);
+    float g = waveColor(x_mid,y_mid,phi_time);
+    float b = waveColor(alphaPerimeter(x_mid,y_mid)+0.161,alphaPerimeter(y_mid,x_mid)+0.31,phi_time);
     color = vec4(r,g,b,1.0);
 }

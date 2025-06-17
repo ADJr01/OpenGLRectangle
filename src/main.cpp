@@ -1,6 +1,5 @@
 #include <cstring>
 #include <iostream>
-#include <memory>
 #include "GLX/Glx.h"
 
 
@@ -12,8 +11,8 @@ unsigned int vao,vbo;
 int main() {
     GLX glx;
     glx.setWindowTitle("Rectangle");
-    glx.setWindowWidth(600);
-    glx.setWindowHeight(400);
+    glx.setWindowWidth(800);
+    glx.setWindowHeight(600);
     glx.addPostLaunchProcedure([&glx]() {
         float vertex_data[] = {
             -0.8f,0.8f,0.1f,
@@ -39,7 +38,6 @@ int main() {
         if (glIsVertexArray(vao)) glBindVertexArray(vao);
 
     });
-
 
     glx.onTick([&glx]() {
         glUseProgram(glx.ShaderTool().getProgram());
